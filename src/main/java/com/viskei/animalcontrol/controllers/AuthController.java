@@ -1,13 +1,9 @@
 package com.viskei.animalcontrol.controllers;
 
-import com.viskei.animalcontrol.model.ERole;
-import com.viskei.animalcontrol.model.Role;
-import com.viskei.animalcontrol.model.User;
 import com.viskei.animalcontrol.payload.request.LoginRequest;
 import com.viskei.animalcontrol.payload.request.SignupRequest;
 import com.viskei.animalcontrol.payload.response.MessageResponse;
 import com.viskei.animalcontrol.payload.response.UserInfoResponse;
-import com.viskei.animalcontrol.repository.RoleRepository;
 import com.viskei.animalcontrol.repository.UserRepository;
 import com.viskei.animalcontrol.security.jwt.JwtUtils;
 import com.viskei.animalcontrol.security.services.UserDetailsImpl;
@@ -17,42 +13,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
     private final AuthService authService;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserRepository userRepository,
-                          RoleRepository roleRepository,
-                          PasswordEncoder encoder,
-                          JwtUtils jwtUtils, AuthService authService) {
-        this.authenticationManager = authenticationManager;
+    public AuthController(UserRepository userRepository,
+                          JwtUtils jwtUtils,
+                          AuthService authService) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.authService = authService;
     }
