@@ -1,11 +1,10 @@
 package com.viskei.animalcontrol.service;
 
-import com.viskei.animalcontrol.payload.request.LoginRequest;
 import com.viskei.animalcontrol.payload.request.SignupRequest;
-import com.viskei.animalcontrol.security.services.UserDetailsImpl;
+import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
-    UserDetailsImpl authenticateUser(LoginRequest loginRequest);
+    ResponseEntity<?> authenticateUser(String username, String password);
 
     void registerUser(SignupRequest signUpRequest);
 }
