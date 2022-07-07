@@ -1,0 +1,7 @@
+ package com.viskei.animalcontrol.model;
+
+public enum ERole {
+  ROLE_USER,
+  ROLE_MODERATOR,
+  ROLE_ADMIN
+}
